@@ -22,10 +22,16 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        //obtener el USUARIO
+        String n = getIntent().getStringExtra("USUARIO");
+        Log.d("MIAPP", "Nombre = " +n);
+
         this.nveces = 0;
         this.color_tocado = ResourcesCompat.getColor(getResources(), R.color.tocado, null);
-
-    }
+        //LEO EL RECORD
+        long record_actual = Preferencias.leerRecord(this);
+        Log.d("MIAPP", "Record actual "+record_actual);
+}
 
     private void initCrono ()
     {
@@ -64,7 +70,10 @@ public class MainActivity extends AppCompatActivity {
                 {
                     this.tfinal = System.currentTimeMillis();
                     long total = tfinal-tinicial;
+                    //GUARDAR RECORD
+                    Preferencias.guardarRecord(total, this);
                     cerrar(total);
+
                 }
 
         }

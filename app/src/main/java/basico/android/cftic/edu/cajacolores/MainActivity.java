@@ -63,6 +63,8 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+
+
     private void cerrar (long tiempo_total, String nombre)
     {
         long segundos = tiempo_total/1000;
@@ -70,6 +72,8 @@ public class MainActivity extends AppCompatActivity {
         toast.show();//informo
         finishAffinity();//cierro
     }
+
+
     public void cambiaColor(View v)
     {
         Log.d("MIAPP", "TOCÓ CAJA");
@@ -84,7 +88,9 @@ public class MainActivity extends AppCompatActivity {
                 {
                     this.tfinal = System.currentTimeMillis();
                     long total = tfinal-tinicial;
-                    Preferencias.guardarRecord(this.nombre_usuario, total,this);
+                    //Preferencias.guardarRecord(this.nombre_usuario, total,this);
+                    Puntacion p = new Puntacion(this.nombre_usuario, total);
+                    Preferencias.guardarRecord(p,this);
                     cerrar(total, this.nombre_usuario);
 
                 }

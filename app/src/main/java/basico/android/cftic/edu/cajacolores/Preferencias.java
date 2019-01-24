@@ -3,6 +3,8 @@ package basico.android.cftic.edu.cajacolores;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.google.gson.Gson;
+
 /**
  * Clase que sirve para almacenar las prefrencias de usuario
  * (de momento sólo el último tiempo)
@@ -13,6 +15,8 @@ public class Preferencias {
     private static final String CLAVE_TIEMPO="tiempo";
     private static final String CLAVE_PRIMERA_VEZ="primera";
     private static final String CLAVE_NOMBRE_USUARIO="nombre";
+
+    private static final String CLAVE_PUNTAUCION="puntuacion";
 
 
 
@@ -49,6 +53,16 @@ public class Preferencias {
         SharedPreferences.Editor ed = sp.edit();
         ed.putLong(CLAVE_TIEMPO, nuevo_record);
         ed.putString(CLAVE_NOMBRE_USUARIO, nombre);
+        ed.commit();
+    }
+
+    public static void guardarRecord (Puntacion p, Context context)
+    {
+        SharedPreferences sp = context.getSharedPreferences(NOMBRE_FICHERO, Context.MODE_PRIVATE);
+        SharedPreferences.Editor ed = sp.edit();
+        Gson gson = new Gson();
+        String puntuacion_json = gson.toJson(p);
+        ed.putString(CLAVE_PUNTAUCION, puntuacion_json);
         ed.commit();
     }
 

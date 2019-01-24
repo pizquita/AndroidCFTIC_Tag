@@ -17,18 +17,32 @@ public class MainActivity extends AppCompatActivity {
     private int nveces;
     private long tinicial;
     private long tfinal;
+    private String nombre_usuario;
+
+    private String obtenerNombre ()
+    {
+        String nombre = null;
+
+        if (getIntent().getExtras()!=null)
+        {
+            Log.d("MIAPP", "Trae el nombre del intent");
+            nombre = getIntent().getStringExtra("NOMBRE_USUARIO");
+            Preferencias.guardarNombre(nombre, this);
+        } else {
+            nombre = Preferencias.leerNombre(this);
+        }
+
+
+        return nombre;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        //obtener el USUARIO
-        String n = getIntent().getStringExtra("USUARIO");
-        Log.d("MIAPP", "Nombre = " +n);
-
+        this.nombre_usuario = obtenerNombre();
         this.nveces = 0;
         this.color_tocado = ResourcesCompat.getColor(getResources(), R.color.tocado, null);
-        //LEO EL RECORD
         long record_actual = Preferencias.leerRecord(this);
         Log.d("MIAPP", "Record actual "+record_actual);
 }
@@ -49,12 +63,12 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private void cerrar (long tiempo_total)
+    private void cerrar (long tiempo_total, String nombre)
     {
         long segundos = tiempo_total/1000;
-        Toast toast = Toast.makeText(this, segundos+" segundos", Toast.LENGTH_SHORT);
+        Toast toast = Toast.makeText(this, "Nombre = " + nombre + " "+segundos+" segundos", Toast.LENGTH_SHORT);
         toast.show();//informo
-        finish();//cierro
+        finishAffinity();//cierro
     }
     public void cambiaColor(View v)
     {
@@ -70,9 +84,8 @@ public class MainActivity extends AppCompatActivity {
                 {
                     this.tfinal = System.currentTimeMillis();
                     long total = tfinal-tinicial;
-                    //GUARDAR RECORD
-                    Preferencias.guardarRecord(total, this);
-                    cerrar(total);
+                    Preferencias.guardarRecord(this.nombre_usuario, total,this);
+                    cerrar(total, this.nombre_usuario);
 
                 }
 

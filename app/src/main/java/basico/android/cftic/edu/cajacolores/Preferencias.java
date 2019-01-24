@@ -12,7 +12,27 @@ public class Preferencias {
     private static final String NOMBRE_FICHERO="record";
     private static final String CLAVE_TIEMPO="tiempo";
     private static final String CLAVE_PRIMERA_VEZ="primera";
+    private static final String CLAVE_NOMBRE_USUARIO="nombre";
 
+
+
+    public static String leerNombre (Context context)
+    {
+        String nombre = null;
+
+        SharedPreferences sp = context.getSharedPreferences(NOMBRE_FICHERO, Context.MODE_PRIVATE);
+        nombre = sp.getString(CLAVE_NOMBRE_USUARIO, null);
+
+        return nombre;
+    }
+
+    public static void guardarNombre (String nombre, Context context)
+    {
+        SharedPreferences sp = context.getSharedPreferences(NOMBRE_FICHERO, Context.MODE_PRIVATE);
+        SharedPreferences.Editor ed = sp.edit();
+        ed.putString(CLAVE_NOMBRE_USUARIO, nombre);
+        ed.commit();
+    }
     public static long leerRecord (Context context)
     {
         long record=0;
@@ -23,11 +43,12 @@ public class Preferencias {
         return record;
     }
 
-    public static void guardarRecord (long nuevo_record, Context context)
+    public static void guardarRecord (String nombre,  long nuevo_record, Context context)
     {
         SharedPreferences sp = context.getSharedPreferences(NOMBRE_FICHERO, Context.MODE_PRIVATE);
         SharedPreferences.Editor ed = sp.edit();
         ed.putLong(CLAVE_TIEMPO, nuevo_record);
+        ed.putString(CLAVE_NOMBRE_USUARIO, nombre);
         ed.commit();
     }
 

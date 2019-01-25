@@ -6,7 +6,12 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 
+
+/**
+ * ACTIVIDAD PRINCIPAL (Main Intent Filter Mainfest)
+ */
 public class InicioActivity extends AppCompatActivity {
+
 
 
 
@@ -14,12 +19,12 @@ public class InicioActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inicio);
-        if (Preferencias.primeraVez(this))
+        if (Preferencias.primeraVez(this)) //si entra la primera vez
         {
-            Preferencias.marcarPrimeraVez(this);
+            Preferencias.marcarPrimeraVez(this); //lo marco
         } else
             {
-               irAMain();
+               irAMain(); //si no, le paso directo a jugar
             }
     }
 
@@ -33,22 +38,28 @@ public class InicioActivity extends AppCompatActivity {
 
         return nombre;
     }
+
+    /**
+     * Callback cuando toca el botón
+     * @param v
+     */
     public void entrar (View v)
     {
-        String nombre = obtenerNombre();
-        irAMain(nombre);
+        String nombre = obtenerNombre();//obtengo el nombre introducido TODO posible mejora, validar que introduzca un nombre válido
+        irAMain(nombre);//voy a la pantalla del juego, pasándole el nombre
+    }
+
+
+    private void irAMain (String nombre)
+    {
+        Intent intent = new Intent(this, MainActivity.class);//creo el intent
+        intent.putExtra("NOMBRE_USUARIO", nombre);//le introduzco el nombre
+        startActivity(intent);//lo lanzo
     }
 
     private void irAMain ()
     {
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
-    }
-
-    private void irAMain (String nombre)
-    {
-        Intent intent = new Intent(this, MainActivity.class);
-        intent.putExtra("NOMBRE_USUARIO", nombre);
-        startActivity(intent);
+        Intent intent = new Intent(this, MainActivity.class);//preparo el intent explícito
+        startActivity(intent);//lo lanzo
     }
 }

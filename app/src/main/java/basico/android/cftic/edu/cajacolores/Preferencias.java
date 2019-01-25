@@ -2,8 +2,14 @@ package basico.android.cftic.edu.cajacolores;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.Log;
 
 import com.google.gson.Gson;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * Clase que sirve para almacenar las prefrencias de usuario
@@ -24,7 +30,36 @@ public class Preferencias {
     private static final String CLAVE_NOMBRE_USUARIO="nombre";
 
 
+    /**
+     * Pasamos del fichero de puntuaciones a una Lista de puntuaciones
+     * @param context
+     * @return
+     */
+    public static List<Puntacion> cargarPuntuaciones (Context context)
+    {
+        List<Puntacion> lp = null;
+        Gson gson = null;
+        Map<String, String> mapa_records = null;
+        String str_json = null;
+        Puntacion puntacion_aux = null;
 
+
+                SharedPreferences sp = context.getSharedPreferences(NOMBRE_FICHERO_RECORD, Context.MODE_PRIVATE);
+                mapa_records = (Map<String, String>)sp.getAll();//cargo todo el contenido en un pama
+                Set<String> cjto_claves = mapa_records.keySet();//obtengo las claves para recorrer el mapa
+                gson = new Gson();//
+                lp = new ArrayList<Puntacion>();
+                for (String clave:cjto_claves)
+                {
+                    str_json = mapa_records.get(clave);//obtengo el registro puntuacion en formato JSON
+                    puntacion_aux = gson.fromJson(str_json, Puntacion.class);////paso de JSON a Puntuaciones
+                    lp.add(puntacion_aux);//agrego a lista
+
+                }
+
+
+        return lp;
+    }
 
     public static String leerNombre (Context context)
     {

@@ -41,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_main);
         this.nombre_usuario = obtenerNombre();//obtengo el nombre
         this.nveces = 0;//inicio el contador de toques

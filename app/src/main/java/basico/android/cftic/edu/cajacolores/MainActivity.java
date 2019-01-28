@@ -47,6 +47,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_main);
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+
         this.nombre_usuario = obtenerNombre();//obtengo el nombre
         this.nveces = 0;//inicio el contador de toques
         this.color_tocado = ResourcesCompat.getColor(getResources(), R.color.tocado, null);//obtengo el color
@@ -137,11 +141,24 @@ public class MainActivity extends AppCompatActivity {
                 i.putExtra("DEVUELTA", true);
                 startActivityForResult(i, 305);
                 break;
+            case android.R.id.home:
+                Log.d("MIAPP", "Tocó ir hacia atrás");
+                super.onBackPressed();
+                break;
         }
-        return super.onOptionsItemSelected(item);
+        return true;
     }
 
     @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        Log.d("MIAPP", "VUELVE " + requestCode);
+        String nuevo_nombre = data.getStringExtra("NOMBRE_NUEVO");
+        getSupportActionBar().setSubtitle(nuevo_nombre);
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+
+
+    /*@Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
 
         Log.d("MIAPP", "Ha vuelto");
@@ -154,5 +171,5 @@ public class MainActivity extends AppCompatActivity {
             }
         }
         super.onActivityResult(requestCode, resultCode, data);
-    }
+    }*/
 }

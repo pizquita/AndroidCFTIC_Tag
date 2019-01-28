@@ -13,8 +13,6 @@ import android.widget.EditText;
 public class InicioActivity extends AppCompatActivity {
 
 
-
-
     private boolean devuelta;
 
     @Override
@@ -24,57 +22,54 @@ public class InicioActivity extends AppCompatActivity {
         if (Preferencias.primeraVez(this)) //si entra la primera vez
         {
             Preferencias.marcarPrimeraVez(this); //lo marco
-        } else
-            {
-                this.devuelta = getIntent().getBooleanExtra("DEVUELTA", false);
-                if (!this.devuelta)
-                {
-                    irAMain(); //si no, le paso directo a jugar
-                }
-
+        } else {
+            this.devuelta = getIntent().getBooleanExtra("DEVUELTA", false);
+            if (!this.devuelta) {
+                irAMain(); //si no, le paso directo a jugar
             }
+
+        }
     }
 
 
-    private String obtenerNombre ()
-    {
+    private String obtenerNombre() {
         String nombre = null;
 
-            EditText editText = (EditText)findViewById(R.id.cajaNombre);
-            nombre = editText.getText().toString();
+        EditText editText = (EditText) findViewById(R.id.cajaNombre);
+        nombre = editText.getText().toString();
 
         return nombre;
     }
 
     /**
      * Callback cuando toca el botón
+     *
      * @param v
      */
-    public void entrar (View v)
-    {
+    public void entrar(View v) {
         String nombre = obtenerNombre();//obtengo el nombre introducido TODO posible mejora, validar que introduzca un nombre válido
 
-        if (this.devuelta)
-        {
-        Intent intent_de_vuelta = new Intent(this, MainActivity.class);
-        intent_de_vuelta.putExtra("NOMBRE_NUEVO", nombre);
-        setResult(RESULT_OK, intent_de_vuelta);
-        finish();
-    }
+        if (this.devuelta) {
+            //Intent intent_de_vuelta = new Intent();
+            //intent_de_vuelta.putExtra("NOMBRE_NUEVO", nombre);
+            Intent i = new Intent();
+            i.putExtra("NOMBRE_NUEVO", nombre);
+            setResult(RESULT_OK, i);//, intent_de_vuelta);
+            finish();
+        }
 
         irAMain(nombre);//voy a la pantalla del juego, pasándole el nombre
     }
 
 
-    private void irAMain (String nombre)
-    {
+    private void irAMain(String nombre) {
         Intent intent = new Intent(this, MainActivity.class);//creo el intent
         intent.putExtra("NOMBRE_USUARIO", nombre);//le introduzco el nombre
         startActivity(intent);//lo lanzo
+        finish();
     }
 
-    private void irAMain ()
-    {
+    private void irAMain() {
         Intent intent = new Intent(this, MainActivity.class);//preparo el intent explícito
         startActivity(intent);//lo lanzo
     }

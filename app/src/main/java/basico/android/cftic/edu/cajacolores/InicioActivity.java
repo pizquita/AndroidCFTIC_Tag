@@ -15,6 +15,8 @@ public class InicioActivity extends AppCompatActivity {
 
 
 
+    private boolean devuelta;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -24,7 +26,12 @@ public class InicioActivity extends AppCompatActivity {
             Preferencias.marcarPrimeraVez(this); //lo marco
         } else
             {
-               irAMain(); //si no, le paso directo a jugar
+                this.devuelta = getIntent().getBooleanExtra("DEVUELTA", false);
+                if (!this.devuelta)
+                {
+                    irAMain(); //si no, le paso directo a jugar
+                }
+
             }
     }
 
@@ -46,6 +53,15 @@ public class InicioActivity extends AppCompatActivity {
     public void entrar (View v)
     {
         String nombre = obtenerNombre();//obtengo el nombre introducido TODO posible mejora, validar que introduzca un nombre válido
+
+        if (this.devuelta)
+        {
+        Intent intent_de_vuelta = new Intent(this, MainActivity.class);
+        intent_de_vuelta.putExtra("NOMBRE_NUEVO", nombre);
+        setResult(RESULT_OK, intent_de_vuelta);
+        finish();
+    }
+
         irAMain(nombre);//voy a la pantalla del juego, pasándole el nombre
     }
 

@@ -1,11 +1,15 @@
 package basico.android.cftic.edu.cajacolores;
 
+import android.content.Intent;
 import android.os.SystemClock;
+import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Chronometer;
 import android.widget.Toast;
@@ -105,9 +109,50 @@ public class MainActivity extends AppCompatActivity {
 
         }//el caso contrario la caja ya habría sido tocada, luego no hago nada
 
+    }
 
 
+    /**
+     * Método que sirve para definir mi propio menú superior
+     * @param menu
+     * @return
+     */
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_sup, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
 
+    /**
+     * Recibimos el evento sobre una opcion del menú superior
+     */
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        //TODO permitir cambiar de nombre al usuario
+        switch (item.getItemId())
+        {
+            case R.id.cambiar_usuario:
+                Log.d("MIAPP", "Tocó cambiar de nombre");
+                Intent i = new Intent(this, InicioActivity.class);
+                i.putExtra("DEVUELTA", true);
+                startActivityForResult(i, 305);
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+
+        Log.d("MIAPP", "Ha vuelto");
+        if (requestCode == 305)
+        {
+            if (resultCode == RESULT_OK)
+            {
+                String nombre_nuevo = data.getStringExtra("NOMBRE_NUEVO");
+                Preferencias.guardarNombre(nombre_nuevo, this);
+            }
+        }
+        super.onActivityResult(requestCode, resultCode, data);
     }
 }

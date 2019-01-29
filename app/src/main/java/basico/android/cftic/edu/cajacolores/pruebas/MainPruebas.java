@@ -1,6 +1,8 @@
-package basico.android.cftic.edu.cajacolores;
+package basico.android.cftic.edu.cajacolores.pruebas;
 
 import com.google.gson.Gson;
+
+import basico.android.cftic.edu.cajacolores.dto.Puntacion;
 
 public class MainPruebas {
 

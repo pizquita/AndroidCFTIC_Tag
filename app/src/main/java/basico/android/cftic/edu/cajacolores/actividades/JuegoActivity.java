@@ -1,10 +1,9 @@
-package basico.android.cftic.edu.cajacolores;
+package basico.android.cftic.edu.cajacolores.actividades;
 
 import android.content.Intent;
 import android.os.SystemClock;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -15,7 +14,11 @@ import android.view.View;
 import android.widget.Chronometer;
 import android.widget.Toast;
 
-public class MainActivity extends AppCompatActivity {
+import basico.android.cftic.edu.cajacolores.util.Preferencias;
+import basico.android.cftic.edu.cajacolores.dto.Puntacion;
+import basico.android.cftic.edu.cajacolores.R;
+
+public class JuegoActivity extends AppCompatActivity {
 
 
     private int color_tocado;
@@ -57,11 +60,13 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_juego);
 
+        //así dibujo la flecha de navegación estandar atrás
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
+        //probar a decomentar si se quiere
         //ocultarActionBar();
         //quitarTituloBarra();
 
@@ -79,6 +84,12 @@ public class MainActivity extends AppCompatActivity {
         c.start();
     }
 
+    private void pararCrono ()
+    {
+        Chronometer c = findViewById(R.id.crono);
+        c.stop();
+    }
+
     /**
      * Iniciamos el juego: quitamos el botón e iniciamos el crono
      * @param v
@@ -93,16 +104,33 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    private void informarConToast (long tiempo_total, String nombre)
+    {
+        Toast toast = Toast.makeText(this, "Nombre = " + nombre + " "+tiempo_total+" segundos", Toast.LENGTH_SHORT);
+        toast.show();//informo
+    }
+
+    private void informarConSnackBar (long tiempo_total, String nombre)
+    {
+        View v = findViewById(R.id.fab);
+        Snackbar s =  Snackbar.make(v, "USUARIO " +this.nombre_usuario, Snackbar.LENGTH_LONG);
+        s.setAction("TIEMPO " + tiempo_total, new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d("MIAPP", "Esto se ejecuta al tocar el snack");
+            }
+        });
+        s.show();
+    }
+
     //Informamos del tiempo con un toast y salimos
     private void cerrar (long tiempo_total, String nombre)
     {
         long segundos = tiempo_total/1000;
-        //Toast toast = Toast.makeText(this, "Nombre = " + nombre + " "+segundos+" segundos", Toast.LENGTH_SHORT);
-        //toast.show();//informo
-        View v = findViewById(R.id.fab);
-        Snackbar s =  Snackbar.make(v, "USUARIO " +this.nombre_usuario + " TIEMPO " + tiempo_total, Snackbar.LENGTH_INDEFINITE);
-        s.show();
-        finishAffinity();//cierro
+        pararCrono();
+        //informarConToast(tiempo_total, nombre);
+        informarConSnackBar(tiempo_total, nombre);
+        //finishAffinity();//cierro
     }
 
 
@@ -126,8 +154,7 @@ public class MainActivity extends AppCompatActivity {
                     Puntacion p = new Puntacion(this.nombre_usuario, total);//creo la puntuación obtenida
                     Preferencias.guardarRecord(p,this);//la guardo
                     cerrar(total, this.nombre_usuario);//salgo e informo
-                    //cerrar(total, this.nombre_usuario);//salgo e informo
-                    //cerrar(total, this.nombre_usuario);//salgo e informo
+
 
                 }//no ha llegado al final, luego sigo, no hago nada
 
@@ -157,9 +184,14 @@ public class MainActivity extends AppCompatActivity {
         {
             case R.id.cambiar_usuario:
                 Log.d("MIAPP", "Tocó cambiar de nombre");
-                Intent i = new Intent(this, InicioActivity.class);
+                Intent i = new Intent(this, NombreActivity.class);
                 i.putExtra("DEVUELTA", true);
                 startActivityForResult(i, 305);
+                break;
+            case R.id.hacer_foto:
+                Log.d("MIAPP", "Tocó hacer foto");
+                Intent i_foto = new Intent(this, FotoActivity.class);
+                startActivity(i_foto);
                 break;
             case android.R.id.home:
                 Log.d("MIAPP", "Tocó ir hacia atrás");
@@ -168,14 +200,6 @@ public class MainActivity extends AppCompatActivity {
         }
         return true;
     }
-
-    /*@Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        Log.d("MIAPP", "VUELVE " + requestCode);
-        String nuevo_nombre = data.getStringExtra("NOMBRE_NUEVO");
-        getSupportActionBar().setSubtitle(nuevo_nombre);
-        super.onActivityResult(requestCode, resultCode, data);
-    }*/
 
 
     @Override

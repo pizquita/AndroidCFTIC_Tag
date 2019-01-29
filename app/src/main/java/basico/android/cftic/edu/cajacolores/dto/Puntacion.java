@@ -1,4 +1,4 @@
-package basico.android.cftic.edu.cajacolores;
+package basico.android.cftic.edu.cajacolores.dto;
 
 public class Puntacion {
 

@@ -7,6 +7,11 @@
         app:showAsAction="always"
         android:id="@+id/cambiar_usuario"/>
 
+    <item android:title="Hacer foto"
+        android:icon="@drawable/baseline_camera_alt_white_24"
+        app:showAsAction="always"
+        android:id="@+id/hacer_foto"/>
+
 
 
 </menu>

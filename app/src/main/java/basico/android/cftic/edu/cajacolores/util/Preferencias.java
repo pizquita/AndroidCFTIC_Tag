@@ -1,8 +1,7 @@
-package basico.android.cftic.edu.cajacolores;
+package basico.android.cftic.edu.cajacolores.util;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.util.Log;
 
 import com.google.gson.Gson;
 
@@ -10,6 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+
+import basico.android.cftic.edu.cajacolores.dto.Puntacion;
 
 /**
  * Clase que sirve para almacenar las prefrencias de usuario

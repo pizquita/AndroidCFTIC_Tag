@@ -1,10 +1,15 @@
 package basico.android.cftic.edu.cajacolores;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.provider.MediaStore;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 
 
 /**
@@ -31,6 +36,36 @@ public class InicioActivity extends AppCompatActivity {
         }
     }
 
+
+    public void tomarFoto (View v)
+    {
+        Log.d("MIAPP", "QUIERO TOMAR UNA FOTO");
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
+            startActivityForResult(takePictureIntent, 500);
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        //super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode==500)//viene de mi petición de tirar mi foto
+        {
+            switch (resultCode)
+            {
+                case RESULT_OK:Log.d("MIAPP", "Tiró la foto bien");
+                    Bitmap thumbnail = (Bitmap)data.getExtras().get("data");
+                    ImageView im = (ImageView)findViewById(R.id.imageView);
+                    im.setImageBitmap(thumbnail);
+                    break;
+
+                case RESULT_CANCELED:Log.d("MIAPP", "Canceló la foto");
+                    break;
+
+            }
+        }
+
+    }
 
     private String obtenerNombre() {
         String nombre = null;

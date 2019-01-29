@@ -3,6 +3,7 @@ package basico.android.cftic.edu.cajacolores;
 import android.content.Intent;
 import android.os.SystemClock;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -42,6 +43,16 @@ public class MainActivity extends AppCompatActivity {
         return nombre;
     }
 
+    private void ocultarActionBar ()
+    {
+        getSupportActionBar().hide();
+    }
+
+    private void quitarTituloBarra ()
+    {
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,7 +62,11 @@ public class MainActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
+        //ocultarActionBar();
+        //quitarTituloBarra();
+
         this.nombre_usuario = obtenerNombre();//obtengo el nombre
+        getSupportActionBar().setSubtitle(this.nombre_usuario);
         this.nveces = 0;//inicio el contador de toques
         this.color_tocado = ResourcesCompat.getColor(getResources(), R.color.tocado, null);//obtengo el color
 
@@ -82,8 +97,11 @@ public class MainActivity extends AppCompatActivity {
     private void cerrar (long tiempo_total, String nombre)
     {
         long segundos = tiempo_total/1000;
-        Toast toast = Toast.makeText(this, "Nombre = " + nombre + " "+segundos+" segundos", Toast.LENGTH_SHORT);
-        toast.show();//informo
+        //Toast toast = Toast.makeText(this, "Nombre = " + nombre + " "+segundos+" segundos", Toast.LENGTH_SHORT);
+        //toast.show();//informo
+        View v = findViewById(R.id.fab);
+        Snackbar s =  Snackbar.make(v, "USUARIO " +this.nombre_usuario + " TIEMPO " + tiempo_total, Snackbar.LENGTH_INDEFINITE);
+        s.show();
         finishAffinity();//cierro
     }
 
@@ -108,6 +126,8 @@ public class MainActivity extends AppCompatActivity {
                     Puntacion p = new Puntacion(this.nombre_usuario, total);//creo la puntuación obtenida
                     Preferencias.guardarRecord(p,this);//la guardo
                     cerrar(total, this.nombre_usuario);//salgo e informo
+                    //cerrar(total, this.nombre_usuario);//salgo e informo
+                    //cerrar(total, this.nombre_usuario);//salgo e informo
 
                 }//no ha llegado al final, luego sigo, no hago nada
 
@@ -149,16 +169,16 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
-    @Override
+    /*@Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         Log.d("MIAPP", "VUELVE " + requestCode);
         String nuevo_nombre = data.getStringExtra("NOMBRE_NUEVO");
         getSupportActionBar().setSubtitle(nuevo_nombre);
         super.onActivityResult(requestCode, resultCode, data);
-    }
+    }*/
 
 
-    /*@Override
+    @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
 
         Log.d("MIAPP", "Ha vuelto");
@@ -168,8 +188,9 @@ public class MainActivity extends AppCompatActivity {
             {
                 String nombre_nuevo = data.getStringExtra("NOMBRE_NUEVO");
                 Preferencias.guardarNombre(nombre_nuevo, this);
+                getSupportActionBar().setSubtitle(nombre_nuevo);
             }
         }
         super.onActivityResult(requestCode, resultCode, data);
-    }*/
+    }
 }

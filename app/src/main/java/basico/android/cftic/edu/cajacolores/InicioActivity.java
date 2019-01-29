@@ -56,9 +56,12 @@ public class InicioActivity extends AppCompatActivity {
             i.putExtra("NOMBRE_NUEVO", nombre);
             setResult(RESULT_OK, i);//, intent_de_vuelta);
             finish();
+        } else {
+
+            irAMain(nombre);//voy a la pantalla del juego, pasándole el nombre
         }
 
-        irAMain(nombre);//voy a la pantalla del juego, pasándole el nombre
+
     }
 
 

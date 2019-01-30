@@ -188,4 +188,13 @@
         android:layout_gravity="end|bottom"
         android:layout_marginBottom="40dp"
         android:layout_marginRight="20dp"/>
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/baseline_autorenew_white_48"
+        android:id="@+id/img_volver"
+        android:visibility="invisible"
+        android:clickable="false"
+        android:onClick="volverAJugar"
+        android:layout_gravity="center"/>
 </FrameLayout>

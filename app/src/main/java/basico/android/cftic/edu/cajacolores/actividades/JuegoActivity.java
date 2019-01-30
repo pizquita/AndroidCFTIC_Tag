@@ -1,6 +1,7 @@
 package basico.android.cftic.edu.cajacolores.actividades;
 
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.SystemClock;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
@@ -12,6 +13,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Chronometer;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import basico.android.cftic.edu.cajacolores.util.Preferencias;
@@ -56,6 +58,13 @@ public class JuegoActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowTitleEnabled(false);
     }
 
+    public void volverAJugar (View v)
+    {
+        //Intent replay = new Intent(this, JuegoActivity.class);
+        //startActivity(replay);
+        //finish();
+        recreate();
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,6 +78,8 @@ public class JuegoActivity extends AppCompatActivity {
         //probar a decomentar si se quiere
         //ocultarActionBar();
         //quitarTituloBarra();
+
+
 
         this.nombre_usuario = obtenerNombre();//obtengo el nombre
         getSupportActionBar().setSubtitle(this.nombre_usuario);
@@ -118,9 +129,24 @@ public class JuegoActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Log.d("MIAPP", "Esto se ejecuta al tocar el snack");
+
+
             }
         });
         s.show();
+    }
+
+    private void reproducirFin() {
+        MediaPlayer mp = MediaPlayer.create(this, R.raw.fin);
+        mp.start();
+    }
+
+    private void mostrarReplay ()
+    {
+        ImageView iv = findViewById(R.id.img_volver);
+        iv.setClickable(true);
+        iv.setVisibility(View.VISIBLE);
+
     }
 
     //Informamos del tiempo con un toast y salimos
@@ -130,6 +156,12 @@ public class JuegoActivity extends AppCompatActivity {
         pararCrono();
         //informarConToast(tiempo_total, nombre);
         informarConSnackBar(tiempo_total, nombre);
+        reproducirFin();
+        mostrarReplay();
+
+
+
+
         //finishAffinity();//cierro
     }
 

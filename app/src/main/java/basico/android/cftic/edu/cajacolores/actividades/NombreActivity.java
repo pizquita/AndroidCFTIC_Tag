@@ -23,11 +23,21 @@ public class NombreActivity extends AppCompatActivity {
 
     private boolean devuelta;
 
+    private void lanzarMostrarRecords ()
+    {
+        Intent i = new Intent(this, MostrarRecords.class);
+        startActivity(i);
+        finish();
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nombre);
-        if (Preferencias.primeraVez(this)) //si entra la primera vez
+
+        lanzarMostrarRecords();
+
+       /*if (Preferencias.primeraVez(this)) //si entra la primera vez
         {
             Preferencias.marcarPrimeraVez(this); //lo marco
         }
@@ -38,7 +48,7 @@ public class NombreActivity extends AppCompatActivity {
                         aJugar(); //si no, le paso directo a jugar
                 }
 
-        }
+        }*/
     }
 
 

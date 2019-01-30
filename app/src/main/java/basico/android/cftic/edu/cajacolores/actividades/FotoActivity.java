@@ -2,6 +2,7 @@ package basico.android.cftic.edu.cajacolores.actividades;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -34,29 +35,72 @@ public class FotoActivity extends AppCompatActivity {
         }
     }
 
+    public void seleccionarFoto (View v)
+    {
+        Log.d("MIAPP", "QUIERO TOMAR UNA FOTO");
+        Intent intentpidefoto = new Intent ();
+        intentpidefoto.setAction(Intent.ACTION_PICK);
+        intentpidefoto.setType("image/*");//TIPO MIME
+
+        startActivityForResult(intentpidefoto, 30);
+
+
+    }
+
+    private void setearImagenCam (int resultCode, Intent data)
+    {
+        switch (resultCode)
+        {
+            case RESULT_OK:Log.d("MIAPP", "Tiró la foto bien");
+                try {
+                    Bitmap thumbnail = (Bitmap) data.getExtras().get("data");
+                    ImageView im = (ImageView) findViewById(R.id.imageView);
+                    im.setImageBitmap(thumbnail);
+                }catch (Throwable t)
+                {
+                    Log.e("MIAPP", "ERROR AL SETEAR LA FOTO", t);
+                }
+                break;
+
+            case RESULT_CANCELED:Log.d("MIAPP", "Canceló la foto");
+                break;
+
+        }
+    }
+
+    private void setearImagenDeArchivo (int resultCode, Intent data)
+    {
+        switch (resultCode)
+        {
+            case RESULT_OK:Log.d("MIAPP", "Seleccionó foto ok");
+                Uri uri = data.getData();
+                Log.d("MIAPP", "URI = " +data.getData().toString());
+                try {
+
+                    Bitmap  bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
+                    ImageView imageView = (ImageView)findViewById(R.id.imageView);
+                    imageView.setImageBitmap(bitmap);
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                break;
+
+            case RESULT_CANCELED:Log.d("MIAPP", "Canceló la foto");
+                break;
+
+        }
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
 
         if (requestCode==500)//viene de mi petición de tirar mi foto
         {
-            switch (resultCode)
-            {
-                case RESULT_OK:Log.d("MIAPP", "Tiró la foto bien");
-                    try {
-                        Bitmap thumbnail = (Bitmap) data.getExtras().get("data");
-                        Log.d("MIAPP", "URI = " +data.getData().toString());
-                        ImageView im = (ImageView) findViewById(R.id.imageView);
-                        im.setImageBitmap(thumbnail);
-                    }catch (Throwable t)
-                    {
-                        Log.e("MIAPP", "ERROR AL SETEAR LA FOTO", t);
-                    }
-                    break;
-
-                case RESULT_CANCELED:Log.d("MIAPP", "Canceló la foto");
-                    break;
-
-            }
+           setearImagenCam(resultCode, data);
+        } else if (requestCode==30)
+        {
+            setearImagenDeArchivo(resultCode, data);
         }
 
     }
@@ -76,5 +120,6 @@ public class FotoActivity extends AppCompatActivity {
         }
         return true;
     }
+
 
 }

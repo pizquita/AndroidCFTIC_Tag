@@ -22,7 +22,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".actividades.MostrarRecords"></activity>
+        <activity android:name=".actividades.MostrarRecords"
+            android:label="@string/record_activity" >
+        </activity>
     </application>
 
 </manifest>

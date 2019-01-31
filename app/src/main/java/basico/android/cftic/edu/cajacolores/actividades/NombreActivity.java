@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -35,9 +36,9 @@ public class NombreActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nombre);
 
-        lanzarMostrarRecords();
+        //lanzarMostrarRecords();
 
-       /*if (Preferencias.primeraVez(this)) //si entra la primera vez
+       if (Preferencias.primeraVez(this)) //si entra la primera vez
         {
             Preferencias.marcarPrimeraVez(this); //lo marco
         }
@@ -48,7 +49,7 @@ public class NombreActivity extends AppCompatActivity {
                         aJugar(); //si no, le paso directo a jugar
                 }
 
-        }*/
+        }
     }
 
 
@@ -80,7 +81,17 @@ public class NombreActivity extends AppCompatActivity {
             aJugar(nombre);//voy a la pantalla del juego, pasándole el nombre
         }
 
+    }
 
+    /**
+     * Método que sirve para definir mi propio menú superior
+     * @param menu
+     * @return
+     */
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_sup, menu);
+        return super.onCreateOptionsMenu(menu);
     }
 
 

@@ -3,4 +3,5 @@
     <string name="juego_activity">Partida</string>
     <string name="nombre_activity">Nombre</string>
     <string name="foto_activity">Foto</string>
+    <string name="record_activity">Foto</string>
 </resources>

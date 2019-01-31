@@ -1,21 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+    android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="160dp"
-    android:background="?android:attr/selectableItemBackground" >
+    android:background="?android:attr/selectableItemBackground">
 
     <TextView android:id="@+id/nombre_jugador"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textStyle="bold"
-        android:textSize="40sp" />
+        android:textSize="40sp"
+        android:text="hfhfhf"
+        android:padding="5dp"/>
 
     <TextView android:id="@+id/tiempo_jugador"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textStyle="normal"
-        android:textSize="24sp" />
-
+        android:textSize="24sp"
+        android:layout_gravity="right"
+        android:text="gfgfgf"
+        android:padding="5dp"/>
+    <ImageView
+        android:id="@+id/imagen_jugador"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/face_white_48dp"/>
 </LinearLayout>

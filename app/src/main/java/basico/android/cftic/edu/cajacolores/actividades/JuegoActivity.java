@@ -1,6 +1,7 @@
 package basico.android.cftic.edu.cajacolores.actividades;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.media.MediaPlayer;
 import android.os.SystemClock;
 import android.support.annotation.Nullable;
@@ -183,7 +184,8 @@ public class JuegoActivity extends AppCompatActivity {
                 {
                     this.tfinal = System.currentTimeMillis();//obtengo el tiempo actual
                     long total = tfinal-tinicial;//calculo el tiempo transcurrido
-                    Puntacion p = new Puntacion(this.nombre_usuario, total);//creo la puntuación obtenida
+                    Bitmap mybit = null;
+                    Puntacion p = new Puntacion(this.nombre_usuario, total, mybit);//creo la puntuación obtenida
                     Preferencias.guardarRecord(p,this);//la guardo
                     cerrar(total, this.nombre_usuario);//salgo e informo
 
@@ -212,8 +214,10 @@ public class JuegoActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         //TODO permitir cambiar de nombre al usuario
+
         switch (item.getItemId())
         {
+
             case R.id.cambiar_usuario:
                 Log.d("MIAPP", "Tocó cambiar de nombre");
                 Intent i = new Intent(this, NombreActivity.class);
@@ -228,6 +232,11 @@ public class JuegoActivity extends AppCompatActivity {
             case android.R.id.home:
                 Log.d("MIAPP", "Tocó ir hacia atrás");
                 super.onBackPressed();
+                break;
+            case R.id.records:
+                Log.d("MIAPP", "Tocó hacer foto");
+                Intent i_record = new Intent(this, MostrarRecords.class);
+                startActivity(i_record);
                 break;
         }
         return true;

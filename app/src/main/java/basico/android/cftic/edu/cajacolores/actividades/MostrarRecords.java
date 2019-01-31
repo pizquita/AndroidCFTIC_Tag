@@ -28,15 +28,16 @@ public class MostrarRecords extends AppCompatActivity {
         setContentView(R.layout.activity_mostrar_records);
 
         datos = Preferencias.cargarPuntuaciones(this);
+        adaptador = new AdapterPuntuaciones(datos);
         recView = (RecyclerView) findViewById(R.id.myrecycview);
         //recView.setHasFixedSize(true);//opcional, si sé que el tamaño no va a cambiar
-        adaptador = new AdapterPuntuaciones(datos);
 
 
-        recView.setAdapter(adaptador);
 
-        //recView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-        recView.setLayoutManager(new GridLayoutManager(this,3));
+        recView.setAdapter(adaptador);//mostrando la lista
+
+        recView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+        //recView.setLayoutManager(new GridLayoutManager(this,3));
         //StaggeredGridLayoutManager para celdas de tamaño variable
         //recView.setLayoutManager(new StaggeredGridLayoutManager());
 
@@ -49,7 +50,7 @@ public class MostrarRecords extends AppCompatActivity {
         //
         //recView.setItemAnimator(new DefaultItemAnimator());
 
-        registerForContextMenu(recView);
+        //registerForContextMenu(recView);
 
         // recView.setContextClickable(true);
 

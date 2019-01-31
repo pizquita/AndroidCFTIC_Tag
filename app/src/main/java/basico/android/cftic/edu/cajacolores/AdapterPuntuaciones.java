@@ -17,23 +17,27 @@ public class AdapterPuntuaciones extends RecyclerView.Adapter<PuntuacionHolder> 
     private List<Puntacion> datos;
 
 
-    //Creo la vista, con el Holder dentro
+    /**
+     * ESTE MÉTODO CREA LAS CAJAS / ITEMS QUE ALBERGARÁ LA INFORMACIÓN
+     * DE CADA REGISTRO / ELEMENTO. CREAMOS LA VISTA (LA CAJA)
+     *
+     * @param parent la propia lista, el RecyclerView
+     * @param viewType
+     * @return
+     */
     @Override
     public PuntuacionHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         PuntuacionHolder puntuacionHolder = null;
 
-        LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-
-        View itemView = inflater.inflate(R.layout.fila_record, parent, false);
-
-        //itemView.setOnClickListener(this);//asociaría el listener
-
-        puntuacionHolder = new PuntuacionHolder(itemView);
+            LayoutInflater inflater = LayoutInflater.from(parent.getContext());
+            View itemView = inflater.inflate(R.layout.fila_record, parent, false);
+            //itemView.setOnClickListener(this);//asociaría el listener
+            puntuacionHolder = new PuntuacionHolder(itemView);
 
         return puntuacionHolder;
     }
 
-    //Al holder, le meto la info de libro que toca
+    //Al holder, le meto la info de item que toca
     @Override
     public void onBindViewHolder(PuntuacionHolder holder, int position) {
 
